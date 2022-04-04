@@ -1,0 +1,38 @@
+{
+	"1": {
+		"availableQuantity": 6,
+		"itemId": 1,
+		"itemName": "dove",
+		"itemCategory": "soap",
+		"sellQuantity": 4,
+		"discount": "true",
+		"pricePerUnit": 10
+	},
+	"2": {
+		"availableQuantity": 11,
+		"itemId": 2,
+		"itemName": "dove",
+		"itemCategory": "conditioner",
+		"sellQuantity": 4,
+		"discount": "false",
+		"pricePerUnit": 10
+	},
+	"3": {
+		"availableQuantity": 8,
+		"itemId": 3,
+		"itemName": "pantene",
+		"itemCategory": "conditioner",
+		"sellQuantity": 2,
+		"discount": "true",
+		"pricePerUnit": 10
+	},
+	"4": {
+		"availableQuantity": 5,
+		"itemId": 4,
+		"itemName": "colgate",
+		"itemCategory": "toothpaste",
+		"sellQuantity": 5,
+		"discount": "false",
+		"pricePerUnit": 10
+	}
+}

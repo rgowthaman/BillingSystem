@@ -1,0 +1,34 @@
+{
+  "11878": [
+    {
+      "quantity": 2,
+      "item_id": 1
+    },
+    {
+      "quantity": 2,
+      "item_id": 2
+    }
+  ],
+  "10185": [
+    {
+      "quantity": 2,
+      "item_id": 3
+    }
+  ],
+  "10618": [
+    {
+      "quantity": 5,
+      "item_id": 4
+    }
+  ],
+  "10360": [
+    {
+      "quantity": 2,
+      "item_id": 1
+    },
+    {
+      "quantity": 2,
+      "item_id": 2
+    }
+  ]
+}
