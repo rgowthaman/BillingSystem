@@ -64,7 +64,9 @@ public class Admin extends User {
                         addAdmin(userName, password);
                         break;
                     case 7:
-                        topSellByQuantity();
+                        System.out.print("Enter limit [Default: 3]: ");
+                        String limit = reader.readLine();
+                        topSellByQuantity(limit);
                         break;
                     case 0:
                         value = false;
@@ -121,13 +123,9 @@ public class Admin extends User {
         System.out.println("Admin added.");
     }
 
-    private void topSellByQuantity() throws IOException {
+    private void topSellByQuantity(String limit) {
         System.out.println("Id" + "\t" + "Name" + "\t" + "Category" + "\t" + "Quantity");
-
         List<Item> List;
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("Enter limit [Default: 3]: ");
-        String limit = reader.readLine();
         if (limit.isEmpty())
             List = data.topSellByQuantity(3);
         else
