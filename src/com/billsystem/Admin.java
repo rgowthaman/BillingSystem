@@ -19,7 +19,7 @@ public class Admin extends User {
             this.data = data;
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             boolean value = true;
-            System.out.println("Welcome Admin!");
+            System.out.println("Welcome Admin-" + this.getId());
             while (value) {
                 System.out.println(
                         "\nPress 1 to view all users\nPress 2 to remove user\nPress 3 to add item\nPress 4 to view all items\nPress 5 to update item quantity\nPress 6 to add admin\nPress 7 to top sell by quantity\nPress 0 to Logout");
@@ -64,7 +64,9 @@ public class Admin extends User {
                         addAdmin(userName, password);
                         break;
                     case 7:
-                        topSellByQuantity();
+                        System.out.print("Enter limit [Default: 3]: ");
+                        String limit = reader.readLine();
+                        topSellByQuantity(limit);
                         break;
                     case 0:
                         value = false;
@@ -121,13 +123,9 @@ public class Admin extends User {
         System.out.println("Admin added.");
     }
 
-    private void topSellByQuantity() throws IOException {
+    private void topSellByQuantity(String limit) {
         System.out.println("Id" + "\t" + "Name" + "\t" + "Category" + "\t" + "Quantity");
-
         List<Item> List;
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("Enter limit [Default: 3]: ");
-        String limit = reader.readLine();
         if (limit.isEmpty())
             List = data.topSellByQuantity(3);
         else
