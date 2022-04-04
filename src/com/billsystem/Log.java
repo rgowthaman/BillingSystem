@@ -16,10 +16,9 @@ public class Log {
                 user.start(data);
             } else
                 System.out.println("Invalid password");
-        } catch (NumberFormatException error) {
+        } catch (NumberFormatException | NullPointerException error) {
+//            System.out.println("Invalid User(Id).");
             error.printStackTrace();
-        } catch (NullPointerException error) {
-            System.out.println("Invalid User(Id).");
         }
     }
 
