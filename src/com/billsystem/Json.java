@@ -38,7 +38,7 @@ public class Json implements Data {
             object = new JSONParser().parse(new FileReader(FILE_DIR + File.separator + jsonFile));
             jsonObject = (JSONObject) object;
         } catch (IOException | ParseException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return jsonObject;
     }
@@ -91,7 +91,7 @@ public class Json implements Data {
             write(userObject, "user.json");
             return true;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return false;
     }
@@ -131,7 +131,7 @@ public class Json implements Data {
             write(jsonObject, "item.json");
             return true;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return false;
     }
@@ -145,7 +145,7 @@ public class Json implements Data {
             itemObject.put("sellQuantity", quantity);
             write(jsonObject, "item.json");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -249,7 +249,7 @@ public class Json implements Data {
             userObject.remove(Integer.toString(orderId));
             write(userObject, "order.json");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -259,7 +259,7 @@ public class Json implements Data {
             userObject.remove(Integer.toString(orderId));
             write(userObject, "order_details.json");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 

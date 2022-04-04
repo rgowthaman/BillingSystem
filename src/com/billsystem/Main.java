@@ -52,7 +52,7 @@ public class Main {
                 }
             }
         } catch (IOException | NullPointerException | NumberFormatException error) {
-            System.out.println("Error: " + error);
+            error.printStackTrace();
         }
     }
 

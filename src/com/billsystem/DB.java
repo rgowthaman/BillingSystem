@@ -76,7 +76,7 @@ public class DB implements Data {
                             rs.getString("role")));
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
         return userList;
@@ -91,7 +91,7 @@ public class DB implements Data {
             pstmt.executeUpdate();
             return true;
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
         return false;
     }
@@ -143,7 +143,7 @@ public class DB implements Data {
             pstmt.executeUpdate();
             return true;
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
         return false;
     }
@@ -157,7 +157,7 @@ public class DB implements Data {
             pstmt.setInt(2, itemId);
             pstmt.executeUpdate();
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
@@ -175,7 +175,7 @@ public class DB implements Data {
                         rs.getInt("sell_quantity")));
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
         return itemList;
@@ -228,7 +228,7 @@ public class DB implements Data {
                 orderList.add(order);
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
         return orderList;
@@ -249,7 +249,7 @@ public class DB implements Data {
                         rs.getFloat("discount"), load_orderDetails(rs.getInt("order_id")));
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
         return order;
@@ -281,7 +281,7 @@ public class DB implements Data {
             pstmt.setInt(1, order_id);
             pstmt.executeUpdate();
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
@@ -292,7 +292,7 @@ public class DB implements Data {
             pstmt.setInt(1, order_id);
             pstmt.executeUpdate();
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
@@ -309,7 +309,7 @@ public class DB implements Data {
                     return false;
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
         return true;
@@ -330,7 +330,7 @@ public class DB implements Data {
                         rs.getInt("sell_quantity")));
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return itemList;
     }

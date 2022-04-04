@@ -16,10 +16,8 @@ public class Log {
                 user.start(data);
             } else
                 System.out.println("Invalid password");
-        } catch (NumberFormatException error) {
-            System.out.println("Error: " + error);
-        } catch (NullPointerException err) {
-            System.out.println("Invalid User");
+        } catch (NumberFormatException | NullPointerException error) {
+            error.printStackTrace();
         }
     }
 
@@ -32,7 +30,7 @@ public class Log {
             System.out.print("Enter password: ");
             password = reader.readLine();
         } catch (IOException error) {
-            System.out.println("Error: " + error);
+            error.printStackTrace();
         }
 //		int userId = data.all_users().size();
 

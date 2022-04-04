@@ -114,11 +114,8 @@ public class Customer extends User {
                 if (totalPrice > 0)
                     System.out.println("Order Canceled.\n");
             }
-        } catch (NumberFormatException | IOException error) {
-            System.out.println("Error: " + error);
-        } catch (NullPointerException error) {
+        } catch (NumberFormatException | IOException | NullPointerException error) {
             error.printStackTrace();
-            System.out.println("Invalid Item.\n");
         }
     }
 
