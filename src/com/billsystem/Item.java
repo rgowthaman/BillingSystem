@@ -23,11 +23,10 @@ public class Item {
     }
 
     public static void viewAll(Data data) {
-        System.out.println("Id\tName\tCategory\tPrice\t\tQuantity");
+        System.out.format("%5s%10s%15s%10s%10s\n", "ID", "Name", "Category", "Price", "Quantity");
         List<Item> itemList = data.all_items();
         for (Item item : itemList) {
-            System.out.println(item.getItemId() + "\t" + item.getItemName() + "\t" + item.getItemCategory() + "\t"
-                    + item.getPricePerUnit() + "\t" + item.getAvailableQuantity());
+            System.out.format("%5d%10s%15s%10s%10d\n", item.getItemId(), item.getItemName(), item.getItemCategory(), item.getPricePerUnit(), item.getAvailableQuantity());
         }
     }
 

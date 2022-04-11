@@ -78,11 +78,10 @@ public class Admin extends User {
     }
 
     void viewAllUsers() {
-        System.out.println("Id\tName\tPassword\tRole");
+        System.out.format("%5s%10s%15s%10s\n", "Id", "Name", "Password", "Role");
         List<User> userList = data.all_users();
         for (User user : userList) {
-            System.out
-                    .println(user.getId() + "\t" + user.getName() + "\t" + user.getStoredPassword() + "\t" + user.getRole());
+            System.out.format("%5d%10s%15s%10s\n",user.getId(), user.getName(), user.getStoredPassword(), user.getRole());
         }
     }
 
@@ -124,15 +123,14 @@ public class Admin extends User {
     }
 
     private void topSellByQuantity(String limit) {
-        System.out.println("Id" + "\t" + "Name" + "\t" + "Category" + "\t" + "Quantity");
+        System.out.format("%5s%10s%15s%10s\n", "ID", "Name", "Category", "Quantity");
         List<Item> List;
         if (limit.isEmpty())
             List = data.topSellByQuantity(3);
         else
             List = data.topSellByQuantity(Integer.parseInt(limit));
         for (Item item : List) {
-            System.out.println(item.getItemId() + "\t" + item.getItemName() + "\t" + item.getItemCategory() + "\t"
-                    + item.getSellQuantity());
+            System.out.format("%5d%10s%15s%10d\n", item.getItemId(), item.getItemName(), item.getItemCategory(), item.getSellQuantity());
         }
     }
 

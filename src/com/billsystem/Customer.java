@@ -120,17 +120,17 @@ public class Customer extends User {
     }
 
     private void displayCart(HashMap<Integer, Integer> cart, float coupon) {
-        System.out.println("Name\tCategory\tQuantity\tPrice");
+        System.out.format("%10s%15s%10s%10s\n", "Name", "Category", "Quantity", "Price");
         for (Entry<Integer, Integer> itemDetail_itr : cart.entrySet()) {
             Item item = data.load_item(itemDetail_itr.getKey());
             int quantity = itemDetail_itr.getValue();
 
-            System.out.print(item.getItemName() + "\t" + item.getItemCategory() + "\t" + quantity);
+            System.out.format("%10s%15s%10d", item.getItemName(), item.getItemCategory(), quantity);
             float itemPrice = item.getPricePerUnit() * quantity;
             if (item.getDiscount().equals("true") && coupon > 0 && !(data.isCouponAcceptable(this.getId(), coupon)))
-                System.out.println("\t" + (itemPrice * coupon));
+                System.out.format("%10s\n", itemPrice * coupon);
             else
-                System.out.println("\t" + itemPrice);
+                System.out.format("%10s\n", itemPrice);
         }
     }
 
