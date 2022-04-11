@@ -4,17 +4,5 @@
 		"role": "Admin",
 		"name": "Admin",
 		"id": 0
-	},
-	"11146": {
-		"password": "lvnbs08",
-		"role": "Customer",
-		"name": "Kumar",
-		"id": 11146
-	},
-	"11992": {
-		"password": "qsjodf",
-		"role": "Customer",
-		"name": "Praveen",
-		"id": 11992
 	}
 }
