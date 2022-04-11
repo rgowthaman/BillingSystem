@@ -82,7 +82,7 @@ public class Admin extends User {
         List<User> userList = data.all_users();
         for (User user : userList) {
             System.out
-                    .println(user.getId() + "\t" + user.getName() + "\t" + user.getEncryptedPassword() + "\t" + user.getRole());
+                    .println(user.getId() + "\t" + user.getName() + "\t" + user.getStoredPassword() + "\t" + user.getRole());
         }
     }
 

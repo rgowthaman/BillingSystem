@@ -29,6 +29,10 @@ abstract public class User {
         return encrypt(password);
     }
 
+    public String getStoredPassword() {
+        return this.password;
+    }
+
     public String getRole() {
         return role;
     }
