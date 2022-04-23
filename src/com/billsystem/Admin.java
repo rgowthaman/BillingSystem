@@ -117,11 +117,15 @@ public class Admin extends User {
     }
 
     private void topSellByQuantity(String limit) {
-        System.out.format("%5s%10s%15s%10s\n", "ID", "Name", "Category", "Quantity");
         limit = limit.isEmpty() ? Constants.DEFAULT_LIMIT : limit;
         List<Item> List = data.topSellByQuantity(Integer.parseInt(limit));
-        for (Item item : List) {
-            System.out.format("%5d%10s%15s%10d\n", item.getItemId(), item.getItemName(), item.getItemCategory(), item.getSellQuantity());
+        if (List.size() > 0) {
+            System.out.format("%5s%10s%15s%10s\n", "ID", "Name", "Category", "Quantity");
+            for (Item item : List) {
+                System.out.format("%5d%10s%15s%10d\n", item.getItemId(), item.getItemName(), item.getItemCategory(), item.getSellQuantity());
+            }
+        } else {
+            System.out.println("No Orders Placed.\n");
         }
     }
 

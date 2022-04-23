@@ -329,7 +329,7 @@ public class DB implements Data {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return itemList;
+        return String.valueOf(itemList.get(0).getSellQuantity()).equals(Constants.NO_ORDERS_PLACED) ? new ArrayList<>() : itemList;
     }
 
 }

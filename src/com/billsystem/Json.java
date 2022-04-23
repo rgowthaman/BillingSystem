@@ -293,7 +293,7 @@ public class Json implements Data {
                     Integer.parseInt(itemObject.get("sellQuantity").toString())));
         }
         itemList.sort((i1, i2) -> i2.getSellQuantity() - i1.getSellQuantity());
-        return itemList.stream().limit(limit).collect(Collectors.toList());
+        return String.valueOf(itemList.get(0).getSellQuantity()).equals(Constants.NO_ORDERS_PLACED) ? new ArrayList<>() : itemList.stream().limit(limit).collect(Collectors.toList());
     }
 
 }
