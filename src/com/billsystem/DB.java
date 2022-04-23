@@ -1,6 +1,7 @@
 package com.billsystem;
 
 import com.billsystem.Customer.Order;
+import com.billsystem.constants.Constants;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -8,18 +9,14 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DB implements Data {
-    static final String DRIVER_CLASS_NAME = "org.postgresql.Driver";
-    static final String URL = "jdbc:postgresql://localhost/billsys";
-    static final String USER = "postgres";
-    static final String PASSWORD = "postgres";
 
     public Connection connect() throws SQLException {
         try {
-            Class.forName(DRIVER_CLASS_NAME);
+            Class.forName(Constants.DRIVER_CLASS_NAME);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+        return DriverManager.getConnection(Constants.PSQL_URL + Constants.DATABASE_NAME, Constants.DB_USER, Constants.DB_PASSWORD);
     }
 
     @Override
@@ -46,7 +43,7 @@ public class DB implements Data {
             pstmt.setInt(1, user_id);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                if (rs.getString("role").equals("Admin"))
+                if (rs.getString("role").equals(Constants.ADMIN_ROLE))
                     user = new Admin(rs.getInt("user_id"), rs.getString("user_name"), rs.getString("password"),
                             rs.getString("role"));
                 else
@@ -68,7 +65,7 @@ public class DB implements Data {
             ResultSet rs = stmt.executeQuery(SQL);
 
             while (rs.next()) {
-                if (rs.getString("role").equals("Customer"))
+                if (rs.getString("role").equals(Constants.CUSTOMER_ROLE))
                     userList.add(new Customer(rs.getInt("user_id"), rs.getString("user_name"), rs.getString("password"),
                             rs.getString("role")));
                 else

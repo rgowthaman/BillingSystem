@@ -1,12 +1,13 @@
 package com.billsystem;
 
+import com.billsystem.constants.Constants;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.Random;
 
 public class Customer extends User {
     Data data;
@@ -17,12 +18,12 @@ public class Customer extends User {
     }
 
     @Override
-    public void start(Data data) {
+    public void start() {
         try {
-            this.data = data;
+            this.data = this.getStorage();
             reader = new BufferedReader(new InputStreamReader(System.in));
             boolean value = true;
-            System.out.println("Welcome, " + this.getName() + "-" + this.getId() + "\n");
+            System.out.println(Constants.GREET + ", " + this.getName() + "-" + this.getId() + "\n");
             while (value) {
                 System.out.println("Press 1 to Place an Order\nPress 2 to View the order history\nPress 0 to Logout");
                 int choice = Integer.parseInt(reader.readLine());
@@ -44,8 +45,9 @@ public class Customer extends User {
     }
 
     private void placeOrder() {
-        int orderId = new Random(System.currentTimeMillis()).nextInt(2000) + 10000;
-        float totalPrice = 0, eligiblePrice = 0;
+        int orderId = Integer.parseInt(Constants.GENERATE_ORDER_ID);
+        float totalPrice = 0;
+        float eligiblePrice = 0;
         boolean shopping = true;
         float eligible_percent = 0;
         HashMap<Integer, Integer> item_details = new HashMap<>();
@@ -68,7 +70,7 @@ public class Customer extends User {
                 } else {
                     // save in map(id, quantity)
                     item_details.put(itemId, quantity);
-                    if (item.getDiscount().equals("true"))
+                    if (item.getDiscount().equals(Constants.TRUE))
                         eligiblePrice += item.getPricePerUnit() * quantity;
                     else
                         totalPrice += item.getPricePerUnit() * quantity;
@@ -78,7 +80,7 @@ public class Customer extends User {
                 // checkout ?
                 System.out.print("Do you want to checkout (y|n): ");
                 String checkout = reader.readLine();
-                if (checkout.equalsIgnoreCase("y")) {
+                if (checkout.equalsIgnoreCase(Constants.YES_SHORT)) {
                     shopping = false;
                 }
             }
@@ -86,8 +88,8 @@ public class Customer extends User {
             // coupon ?
             System.out.print("Do you have coupon: ");
             String coupon = reader.readLine();
-            if (coupon.startsWith("PROMO")) {
-                eligible_percent = (float) (1 - Float.parseFloat(coupon.replace("PROMO", "")) * 0.01);
+            if (coupon.startsWith(Constants.DISCOUNT_PROMO)) {
+                eligible_percent = (float) (1 - Float.parseFloat(coupon.replace(Constants.DISCOUNT_PROMO, Constants.EMPTY_STRING)) * 0.01);
                 if (data.isCouponAcceptable(this.getId(), eligible_percent))
                     eligiblePrice *= eligible_percent;
             }
@@ -101,7 +103,7 @@ public class Customer extends User {
             System.out.print("Total Price: " + totalPrice + "\n\nConfirm your order (y|n): ");
             String confirmation = reader.readLine();
 
-            if (confirmation.equalsIgnoreCase("y") && totalPrice > 0) {
+            if (confirmation.equalsIgnoreCase(Constants.YES_SHORT) && totalPrice > 0) {
                 System.out.println("Order Confirmed.\n");
             } else {
                 for (Entry<Integer, Integer> itr : data.load_order(this.getId(), orderId).item_details.entrySet()) {
@@ -127,7 +129,7 @@ public class Customer extends User {
 
             System.out.format("%10s%15s%10d", item.getItemName(), item.getItemCategory(), quantity);
             float itemPrice = item.getPricePerUnit() * quantity;
-            if (item.getDiscount().equals("true") && coupon > 0 && !(data.isCouponAcceptable(this.getId(), coupon)))
+            if (item.getDiscount().equals(Constants.TRUE) && coupon > 0 && !(data.isCouponAcceptable(this.getId(), coupon)))
                 System.out.format("%10s\n", itemPrice * coupon);
             else
                 System.out.format("%10s\n", itemPrice);

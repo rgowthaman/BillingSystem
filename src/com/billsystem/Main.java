@@ -1,5 +1,7 @@
 package com.billsystem;
 
+import com.billsystem.constants.Constants;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,9 +15,9 @@ public class Main {
         reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.print("Data Storage (db|json): ");
         String choice = reader.readLine();
-        if (choice.equals("db"))
+        if (choice.equals(Constants.STORE_AS_DB))
             data = new DB();
-        else if (choice.equals("json"))
+        else if (choice.equals(Constants.STORE_AS_JSON))
             data = new Json();
         else {
             System.out.print("Invalid Input. ");

@@ -5,6 +5,7 @@ abstract public class User {
     private final String password;
     private final String role;
     private final String name;
+    private Data data;
 
     public User(int id, String password, String role, String name) {
         this.id = id;
@@ -14,19 +15,19 @@ abstract public class User {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public String getPassword() {
-        return decrypt(password);
+        return decrypt(this.password);
     }
 
     public String getEncryptedPassword() {
-        return encrypt(password);
+        return encrypt(this.password);
     }
 
     public String getStoredPassword() {
@@ -34,7 +35,15 @@ abstract public class User {
     }
 
     public String getRole() {
-        return role;
+        return this.role;
+    }
+
+    public Data getStorage() {
+        return this.data;
+    }
+
+    public void setStorage(Data data) {
+        this.data = data;
     }
 
     public String encrypt(String password) {
@@ -65,6 +74,6 @@ abstract public class User {
         return decrypted_pass.toString();
     }
 
-    abstract public void start(Data data);
+    abstract public void start();
 
 }

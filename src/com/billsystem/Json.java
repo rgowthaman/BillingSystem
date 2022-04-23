@@ -1,12 +1,12 @@
 package com.billsystem;
 
 import com.billsystem.Customer.Order;
+import com.billsystem.constants.Constants;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,13 +17,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Json implements Data {
-    static int new_order_item_index = 0;
-    final String FILE_DIR = System.getProperty("user.dir");
+    static int new_order_item_index = Integer.parseInt(Constants.NEW_INDEX_VALUE);
     JSONArray orderList;
 
     void write(JSONObject userObject, String jsonFile) {
         try {
-            FileWriter fileWriter = new FileWriter(FILE_DIR + File.separator + jsonFile);
+            FileWriter fileWriter = new FileWriter(Constants.FILE_DIR + Constants.FILE_SEPARATOR + jsonFile);
             fileWriter.write(userObject.toString());
             fileWriter.close();
         } catch (IOException e) {
@@ -35,7 +34,7 @@ public class Json implements Data {
         Object object;
         JSONObject jsonObject = null;
         try {
-            object = new JSONParser().parse(new FileReader(FILE_DIR + File.separator + jsonFile));
+            object = new JSONParser().parse(new FileReader(Constants.FILE_DIR + Constants.FILE_SEPARATOR + jsonFile));
             jsonObject = (JSONObject) object;
         } catch (IOException | ParseException e) {
             e.printStackTrace();
@@ -51,15 +50,15 @@ public class Json implements Data {
         jsonObject.put("name", user.getName());
         jsonObject.put("password", user.getEncryptedPassword());
         jsonObject.put("role", user.getRole());
-        JSONObject userObject = read("user.json");
+        JSONObject userObject = read(Constants.USER_JSON_FILE);
         userObject.put(Integer.toString(user.getId()), jsonObject);
-        write(userObject, "user.json");
+        write(userObject, Constants.USER_JSON_FILE);
     }
 
     @Override
     public User load_user(int userId) {
-        JSONObject userObject = (JSONObject) read("user.json").get(Integer.toString(userId));
-        if (userObject.get("role").equals("Customer")) {
+        JSONObject userObject = (JSONObject) read(Constants.USER_JSON_FILE).get(Integer.toString(userId));
+        if (userObject.get("role").equals(Constants.CUSTOMER_ROLE)) {
             return new Customer(userId, userObject.get("name").toString(), userObject.get("password").toString(),
                     userObject.get("role").toString());
         } else {
@@ -71,7 +70,7 @@ public class Json implements Data {
     @Override
     public List<User> all_users() {
         List<User> userList = new ArrayList<>();
-        JSONObject jsonObject = read("user.json");
+        JSONObject jsonObject = read(Constants.USER_JSON_FILE);
         @SuppressWarnings("unchecked")
         Set<String> keys = jsonObject.keySet();
         for (Object key : keys) {
@@ -85,10 +84,10 @@ public class Json implements Data {
 
     @Override
     public boolean remove_user(int userId) {
-        JSONObject userObject = read("user.json");
+        JSONObject userObject = read(Constants.USER_JSON_FILE);
         try {
             userObject.remove(Integer.toString(userId));
-            write(userObject, "user.json");
+            write(userObject, Constants.USER_JSON_FILE);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -107,14 +106,14 @@ public class Json implements Data {
         jsonObject.put("availableQuantity", item.getAvailableQuantity());
         jsonObject.put("discount", item.getDiscount());
         jsonObject.put("sellQuantity", item.getSellQuantity());
-        JSONObject itemObject = read("item.json");
+        JSONObject itemObject = read(Constants.ITEM_JSON_FILE);
         itemObject.put(Integer.toString(item.getItemId()), jsonObject);
-        write(itemObject, "item.json");
+        write(itemObject, Constants.ITEM_JSON_FILE);
     }
 
     @Override
     public Item load_item(int itemID) {
-        JSONObject itemObject = (JSONObject) read("item.json").get(Integer.toString(itemID));
+        JSONObject itemObject = (JSONObject) read(Constants.ITEM_JSON_FILE).get(Integer.toString(itemID));
         return new Item(Integer.parseInt(itemObject.get("itemId").toString()), itemObject.get("itemName").toString(),
                 itemObject.get("itemCategory").toString(), Float.parseFloat(itemObject.get("pricePerUnit").toString()),
                 Integer.parseInt(itemObject.get("availableQuantity").toString()), itemObject.get("discount").toString(),
@@ -124,11 +123,11 @@ public class Json implements Data {
     @SuppressWarnings("unchecked")
     @Override
     public boolean update_quantity(int itemId, int quantity) {
-        JSONObject jsonObject = read("item.json");
+        JSONObject jsonObject = read(Constants.ITEM_JSON_FILE);
         try {
             JSONObject itemObject = (JSONObject) jsonObject.get(Integer.toString(itemId));
             itemObject.put("availableQuantity", quantity);
-            write(jsonObject, "item.json");
+            write(jsonObject, Constants.ITEM_JSON_FILE);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -139,11 +138,11 @@ public class Json implements Data {
     @SuppressWarnings("unchecked")
     @Override
     public void updateSellQuantity(int itemId, int quantity) {
-        JSONObject jsonObject = read("item.json");
+        JSONObject jsonObject = read(Constants.ITEM_JSON_FILE);
         try {
             JSONObject itemObject = (JSONObject) jsonObject.get(Integer.toString(itemId));
             itemObject.put("sellQuantity", quantity);
-            write(jsonObject, "item.json");
+            write(jsonObject, Constants.ITEM_JSON_FILE);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -152,7 +151,7 @@ public class Json implements Data {
     @Override
     public List<Item> all_items() {
         List<Item> itemList = new ArrayList<>();
-        JSONObject jsonObject = read("item.json");
+        JSONObject jsonObject = read(Constants.ITEM_JSON_FILE);
         @SuppressWarnings("unchecked")
         Set<String> keys = jsonObject.keySet();
         for (Object key : keys) {
@@ -179,15 +178,15 @@ public class Json implements Data {
             store_orderDetails(order.orderId, item_id, order.item_details.get(item_id));
         }
         new_order_item_index = 0;
-        JSONObject ordersJsonObject = read("order.json");
+        JSONObject ordersJsonObject = read(Constants.ORDER_JSON_FILE);
         ordersJsonObject.put(Integer.toString(order.orderId), jsonObject);
-        write(ordersJsonObject, "order.json");
+        write(ordersJsonObject, Constants.ORDER_JSON_FILE);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public void store_orderDetails(int orderId, Integer item_id, Integer quantity) {
-        JSONObject jsonObject = read("order_details.json");
+        JSONObject jsonObject = read(Constants.ORDER_DETAILS_JSON_FILE);
         JSONObject itemJsonObject = new JSONObject();
         if (new_order_item_index == 0)
             orderList = new JSONArray();
@@ -198,13 +197,13 @@ public class Json implements Data {
         orderList.add(itemJsonObject);
         jsonObject.put(Integer.toString(orderId), orderList);
         new_order_item_index++;
-        write(jsonObject, "order_details.json");
+        write(jsonObject, Constants.ORDER_DETAILS_JSON_FILE);
     }
 
     @Override
     public List<Order> all_orders(int userId) {
         List<Order> orderList = new ArrayList<>();
-        JSONObject jsonObject = read("order.json");
+        JSONObject jsonObject = read(Constants.ORDER_JSON_FILE);
         @SuppressWarnings("unchecked")
         Set<String> keys = jsonObject.keySet();
         for (Object key : keys) {
@@ -221,7 +220,7 @@ public class Json implements Data {
 
     @Override
     public Order load_order(int user_id, int orderId) {
-        JSONObject orderObject = (JSONObject) read("order.json").get(Integer.toString(orderId));
+        JSONObject orderObject = (JSONObject) read(Constants.ORDER_JSON_FILE).get(Integer.toString(orderId));
         return new Order(Integer.parseInt(orderObject.get("order_id").toString()),
                 Integer.parseInt(orderObject.get("user_id").toString()),
                 Float.parseFloat(orderObject.get("total_price").toString()),
@@ -233,7 +232,7 @@ public class Json implements Data {
     @Override
     public HashMap<Integer, Integer> load_orderDetails(int orderId) {
         HashMap<Integer, Integer> itemListHashMap = new HashMap<>();
-        JSONArray ordArray = (JSONArray) read("order_details.json").get(Integer.toString(orderId));
+        JSONArray ordArray = (JSONArray) read(Constants.ORDER_DETAILS_JSON_FILE).get(Integer.toString(orderId));
 
         for (JSONObject orderObject : (Iterable<JSONObject>) ordArray)
             itemListHashMap.put(Integer.parseInt(orderObject.get("item_id").toString()),
@@ -243,21 +242,21 @@ public class Json implements Data {
 
     @Override
     public void remove_order(int orderId) {
-        JSONObject userObject = read("order.json");
+        JSONObject userObject = read(Constants.ORDER_JSON_FILE);
         remove_orderDetails(orderId);
         try {
             userObject.remove(Integer.toString(orderId));
-            write(userObject, "order.json");
+            write(userObject, Constants.ORDER_JSON_FILE);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void remove_orderDetails(int orderId) {
-        JSONObject userObject = read("order_details.json");
+        JSONObject userObject = read(Constants.ORDER_DETAILS_JSON_FILE);
         try {
             userObject.remove(Integer.toString(orderId));
-            write(userObject, "order_details.json");
+            write(userObject, Constants.ORDER_DETAILS_JSON_FILE);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -265,7 +264,7 @@ public class Json implements Data {
 
     @Override
     public boolean isCouponAcceptable(int userId, float coupon) {
-        JSONObject jsonObject = read("order.json");
+        JSONObject jsonObject = read(Constants.ORDER_JSON_FILE);
         @SuppressWarnings("unchecked")
         Set<String> keys = jsonObject.keySet();
         for (Object key : keys) {
@@ -281,7 +280,7 @@ public class Json implements Data {
     @Override
     public List<Item> topSellByQuantity(int limit) {
         List<Item> itemList = new ArrayList<>();
-        JSONObject jsonObject = read("item.json");
+        JSONObject jsonObject = read(Constants.ITEM_JSON_FILE);
         @SuppressWarnings("unchecked")
         Set<String> keys = jsonObject.keySet();
         for (Object key : keys) {

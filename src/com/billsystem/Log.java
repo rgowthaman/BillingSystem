@@ -1,9 +1,10 @@
 package com.billsystem;
 
+import com.billsystem.constants.Constants;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Random;
 
 public class Log {
     private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -12,8 +13,9 @@ public class Log {
     public void signIn(int userId, String password) {
         try {
             User user = data.load_user(userId);
+            user.setStorage(data);
             if (authenticate(user, password)) {
-                user.start(data);
+                user.start();
             } else
                 System.out.println("Invalid password");
         } catch (NumberFormatException | NullPointerException error) {
@@ -32,12 +34,8 @@ public class Log {
         } catch (IOException error) {
             error.printStackTrace();
         }
-//		int userId = data.all_users().size();
-
-        int userId = new Random(System.currentTimeMillis()).nextInt(2000) + 10000;
-        String userRole = "Customer";
-
-        data.store_user(new Customer(userId, userName, password, userRole));
+        int userId = Integer.parseInt(Constants.GENERATE_CUSTOMER_ID);
+        data.store_user(new Customer(userId, userName, password, Constants.CUSTOMER_ROLE));
         signIn(userId, password);
     }
 

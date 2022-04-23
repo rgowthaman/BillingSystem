@@ -1,8 +1,8 @@
 {
-	"0": {
-		"password": "benjo234",
-		"role": "Admin",
-		"name": "Admin",
-		"id": 0
-	}
+  "0": {
+    "password": "benjo234",
+    "role": "Admin",
+    "name": "Admin",
+    "id": 0
+  }
 }

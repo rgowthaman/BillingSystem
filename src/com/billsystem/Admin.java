@@ -1,25 +1,26 @@
 package com.billsystem;
 
+import com.billsystem.constants.Constants;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
-import java.util.Random;
 
 public class Admin extends User {
-    Data data;
+    static Data data;
 
     public Admin(int id, String name, String password, String role) {
         super(id, password, role, name);
     }
 
     @Override
-    public void start(Data data) {
+    public void start() {
         try {
-            this.data = data;
+            Admin.data = this.getStorage();
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             boolean value = true;
-            System.out.println("Welcome Admin-" + this.getId());
+            System.out.println(Constants.GREET + " " + Constants.ADMIN_ROLE + "-" + this.getId());
             while (value) {
                 System.out.println(
                         "\nPress 1 to view all users\nPress 2 to remove user\nPress 3 to add item\nPress 4 to view all items\nPress 5 to update item quantity\nPress 6 to add admin\nPress 7 to top sell by quantity\nPress 0 to Logout");
@@ -64,7 +65,7 @@ public class Admin extends User {
                         addAdmin(userName, password);
                         break;
                     case 7:
-                        System.out.print("Enter limit [Default: 3]: ");
+                        System.out.print("Enter limit [Default: " + Constants.DEFAULT_LIMIT + "]: ");
                         String limit = reader.readLine();
                         topSellByQuantity(limit);
                         break;
@@ -81,7 +82,7 @@ public class Admin extends User {
         System.out.format("%5s%10s%15s%10s\n", "Id", "Name", "Password", "Role");
         List<User> userList = data.all_users();
         for (User user : userList) {
-            System.out.format("%5d%10s%15s%10s\n",user.getId(), user.getName(), user.getStoredPassword(), user.getRole());
+            System.out.format("%5d%10s%15s%10s\n", user.getId(), user.getName(), user.getStoredPassword(), user.getRole());
         }
     }
 
@@ -93,14 +94,9 @@ public class Admin extends User {
     }
 
     private void addItem(String itemName, String category, float price, int quantity, String discount) {
-//		int itemId = data.all_items().size() + 1;
-
-        int itemId = new Random(System.currentTimeMillis()).nextInt(2000) + 10000;
+        int itemId = Integer.parseInt(Constants.GENERATE_ITEM_ID);
         int sellQuantity = 0;
-        if (discount.equals("y"))
-            discount = "true";
-        else
-            discount = "false";
+        discount = discount.equalsIgnoreCase(Constants.YES_SHORT) ? Constants.TRUE : Constants.FALSE;
         Item item = new Item(itemId, itemName, category, price, quantity, discount, sellQuantity);
         data.store_item(item);
         System.out.println("Item added.");
@@ -115,20 +111,15 @@ public class Admin extends User {
     }
 
     private void addAdmin(String userName, String password) {
-//		int userId = data.all_users().size();
-
-        int userId = new Random(System.currentTimeMillis()).nextInt(2000) + 10000;
-        data.store_user(new Admin(userId, userName, password, "Admin"));
+        int userId = Integer.parseInt(Constants.GENERATE_ADMIN_ID);
+        data.store_user(new Admin(userId, userName, password, Constants.ADMIN_ROLE));
         System.out.println("Admin added.");
     }
 
     private void topSellByQuantity(String limit) {
         System.out.format("%5s%10s%15s%10s\n", "ID", "Name", "Category", "Quantity");
-        List<Item> List;
-        if (limit.isEmpty())
-            List = data.topSellByQuantity(3);
-        else
-            List = data.topSellByQuantity(Integer.parseInt(limit));
+        limit = limit.isEmpty() ? Constants.DEFAULT_LIMIT : limit;
+        List<Item> List = data.topSellByQuantity(Integer.parseInt(limit));
         for (Item item : List) {
             System.out.format("%5d%10s%15s%10d\n", item.getItemId(), item.getItemName(), item.getItemCategory(), item.getSellQuantity());
         }
