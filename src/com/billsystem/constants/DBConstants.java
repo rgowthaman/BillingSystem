@@ -6,5 +6,5 @@ public class DBConstants extends FileConstants {
     public static final String PSQL_URL = "jdbc:postgresql://localhost/";
     public static final String DB_USER = "postgres";
     public static final String DB_PASSWORD = "postgres";
-    public static String STORE_AS_DB = "db";
+    public static final String STORE_AS_DB = "db";
 }
