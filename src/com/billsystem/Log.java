@@ -10,6 +10,12 @@ public class Log {
     private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     static Data data;
 
+    /**
+     * To sigIn to user account
+     *
+     * @param userId
+     * @param password
+     */
     public void signIn(int userId, String password) {
         try {
             User user = data.load_user(userId);
@@ -23,6 +29,9 @@ public class Log {
         }
     }
 
+    /**
+     * To create a new user account
+     */
     void signup() {
         String userName = null;
         String password = null;
@@ -39,6 +48,13 @@ public class Log {
         signIn(userId, password);
     }
 
+    /**
+     * To authenticate user login
+     *
+     * @param user
+     * @param password
+     * @return
+     */
     boolean authenticate(User user, String password) {
         return user.getPassword().equals(password);
     }

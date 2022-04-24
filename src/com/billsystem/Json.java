@@ -20,6 +20,12 @@ public class Json implements Data {
     static int new_order_item_index = Integer.parseInt(Constants.NEW_INDEX_VALUE);
     JSONArray orderList;
 
+    /**
+     * To write a json file
+     *
+     * @param userObject
+     * @param jsonFile
+     */
     void write(JSONObject userObject, String jsonFile) {
         try {
             FileWriter fileWriter = new FileWriter(Constants.FILE_DIR + Constants.FILE_SEPARATOR + jsonFile);
@@ -30,6 +36,12 @@ public class Json implements Data {
         }
     }
 
+    /**
+     * To read a json file
+     *
+     * @param jsonFile
+     * @return JSONObject
+     */
     public JSONObject read(String jsonFile) {
         Object object;
         JSONObject jsonObject = null;
@@ -252,6 +264,11 @@ public class Json implements Data {
         }
     }
 
+    /**
+     * To remove order details
+     *
+     * @param orderId
+     */
     public void remove_orderDetails(int orderId) {
         JSONObject userObject = read(Constants.ORDER_DETAILS_JSON_FILE);
         try {

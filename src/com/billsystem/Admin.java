@@ -14,6 +14,9 @@ public class Admin extends User {
         super(id, password, role, name);
     }
 
+    /**
+     * To start using Admin access
+     */
     @Override
     public void start() {
         try {
@@ -78,6 +81,9 @@ public class Admin extends User {
         }
     }
 
+    /**
+     * To print all user details
+     */
     void viewAllUsers() {
         System.out.format("%5s%10s%15s%10s\n", "Id", "Name", "Password", "Role");
         List<User> userList = data.all_users();
@@ -86,6 +92,11 @@ public class Admin extends User {
         }
     }
 
+    /**
+     * To remove user data from database
+     *
+     * @param userId
+     */
     private void removeUser(int userId) {
         if (data.remove_user(userId)) {
             System.out.println("User Removed");
@@ -93,6 +104,15 @@ public class Admin extends User {
             System.out.println("Invalid User");
     }
 
+    /**
+     * To add new item to the database
+     *
+     * @param itemName
+     * @param category
+     * @param price
+     * @param quantity
+     * @param discount
+     */
     private void addItem(String itemName, String category, float price, int quantity, String discount) {
         int itemId = Integer.parseInt(Constants.GENERATE_ITEM_ID);
         int sellQuantity = 0;
@@ -102,6 +122,12 @@ public class Admin extends User {
         System.out.println("Item added.");
     }
 
+    /**
+     * To update available quantity of the item
+     *
+     * @param itemId
+     * @param quantity
+     */
     private void updateItem(int itemId, int quantity) {
         if (data.update_quantity(itemId, quantity)) {
             System.out.println("Item quantity updated.");
@@ -110,12 +136,23 @@ public class Admin extends User {
         }
     }
 
+    /**
+     * To add new admin to database
+     *
+     * @param userName
+     * @param password
+     */
     private void addAdmin(String userName, String password) {
         int userId = Integer.parseInt(Constants.GENERATE_ADMIN_ID);
         data.store_user(new Admin(userId, userName, password, Constants.ADMIN_ROLE));
         System.out.println("Admin added.");
     }
 
+    /**
+     * To print top-selling items
+     *
+     * @param limit
+     */
     private void topSellByQuantity(String limit) {
         limit = limit.isEmpty() ? Constants.DEFAULT_LIMIT : limit;
         List<Item> List = data.topSellByQuantity(Integer.parseInt(limit));

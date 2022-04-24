@@ -17,6 +17,9 @@ public class Customer extends User {
         super(id, password, role, name);
     }
 
+    /**
+     * To start using customer access
+     */
     @Override
     public void start() {
         try {
@@ -44,6 +47,9 @@ public class Customer extends User {
         }
     }
 
+    /**
+     * To place an order
+     */
     private void placeOrder() {
         int orderId = Integer.parseInt(Constants.GENERATE_ORDER_ID);
         float totalPrice = 0;
@@ -121,6 +127,12 @@ public class Customer extends User {
         }
     }
 
+    /**
+     * To view customer order(s)
+     *
+     * @param cart
+     * @param coupon
+     */
     private void displayCart(HashMap<Integer, Integer> cart, float coupon) {
         System.out.format("%10s%15s%10s%10s\n", "Name", "Category", "Quantity", "Price");
         for (Entry<Integer, Integer> itemDetail_itr : cart.entrySet()) {
@@ -136,6 +148,9 @@ public class Customer extends User {
         }
     }
 
+    /**
+     * To get customer order history
+     */
     public void getHistory() {
         List<Order> orderList = data.all_orders(this.getId());
         if (orderList.isEmpty()) {
@@ -151,6 +166,9 @@ public class Customer extends User {
         }
     }
 
+    /**
+     * To create new Order object
+     */
     public static class Order {
         public int orderId;
         public int userId;

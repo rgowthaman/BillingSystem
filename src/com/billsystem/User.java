@@ -46,6 +46,12 @@ abstract public class User {
         this.data = data;
     }
 
+    /**
+     * To encrypt password
+     *
+     * @param password
+     * @return encrypted password
+     */
     public String encrypt(String password) {
         StringBuilder encrypted_pass = new StringBuilder();
         for (int i = 0; i < password.length(); i++) {
@@ -60,6 +66,12 @@ abstract public class User {
         return encrypted_pass.toString();
     }
 
+    /**
+     * To decrypt password
+     *
+     * @param password
+     * @return decrypted password
+     */
     private String decrypt(String password) {
         StringBuilder decrypted_pass = new StringBuilder();
         for (int i = 0; i < password.length(); i++) {

@@ -22,6 +22,11 @@ public class Item {
         this.setSellQuantity(sellQuantity);
     }
 
+    /**
+     * To print all item details
+     *
+     * @param data
+     */
     public static void viewAll(Data data) {
         System.out.format("%5s%10s%15s%10s%10s\n", "ID", "Name", "Category", "Price", "Quantity");
         List<Item> itemList = data.all_items();

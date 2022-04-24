@@ -10,6 +10,12 @@ import java.util.List;
 
 public class DB implements Data {
 
+    /**
+     * To get connection from PSQL
+     *
+     * @return
+     * @throws SQLException
+     */
     public Connection connect() throws SQLException {
         try {
             Class.forName(Constants.DRIVER_CLASS_NAME);
@@ -282,6 +288,11 @@ public class DB implements Data {
         }
     }
 
+    /**
+     * To remove order details
+     *
+     * @param order_id
+     */
     public void remove_orderDetails(int order_id) {
         String SQL = "DELETE FROM order_details WHERE order_id=?";
 

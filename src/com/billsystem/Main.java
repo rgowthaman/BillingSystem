@@ -9,6 +9,14 @@ import java.io.InputStreamReader;
 public class Main {
     static BufferedReader reader;
 
+    /**
+     * To choose storage type
+     * 1.database
+     * 2.json
+     *
+     * @return Data
+     * @throws IOException
+     */
     private static Data chooseStorage() throws IOException {
         Data data;
 
