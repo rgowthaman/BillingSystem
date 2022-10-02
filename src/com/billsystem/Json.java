@@ -87,9 +87,15 @@ public class Json implements Data {
         Set<String> keys = jsonObject.keySet();
         for (Object key : keys) {
             JSONObject userObject = (JSONObject) jsonObject.get(key);
-            userList.add(
-                    new Customer(Integer.parseInt(userObject.get("id").toString()), userObject.get("name").toString(),
-                            userObject.get("password").toString(), userObject.get("role").toString()));
+            if (userObject.get("role").toString().equals(Constants.CUSTOMER_ROLE)) {
+                userList.add(
+                        new Customer(Integer.parseInt(userObject.get("id").toString()), userObject.get("name").toString(),
+                                userObject.get("password").toString(), userObject.get("role").toString()));
+            } else {
+                userList.add(
+                        new Admin(Integer.parseInt(userObject.get("id").toString()), userObject.get("name").toString(),
+                                userObject.get("password").toString(), userObject.get("role").toString()));
+            }
         }
         return userList;
     }

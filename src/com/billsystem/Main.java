@@ -1,6 +1,7 @@
 package com.billsystem;
 
 import com.billsystem.constants.Constants;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,11 +19,20 @@ public class Main {
      * @throws IOException
      */
     private static Data chooseStorage() throws IOException {
-        Data data;
-
         reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.print("Data Storage (db|json): ");
         String choice = reader.readLine();
+        return chooseStorage(choice);
+    }
+
+    /**
+     * To choose storage type 1.database 2.json
+     * @param choice
+     * @return
+     * @throws IOException
+     */
+    private static Data chooseStorage(String choice) throws IOException {
+        Data data;
         if (choice.equals(Constants.STORE_AS_DB))
             data = new DB();
         else if (choice.equals(Constants.STORE_AS_JSON))
@@ -37,14 +47,13 @@ public class Main {
     public static void main(String[] args) {
         try {
             reader = new BufferedReader(new InputStreamReader(System.in));
-            Data data = chooseStorage();
+            Data data = args.length > 0 ? chooseStorage(new JSONObject(args[0]).getString("Data")) : chooseStorage(); // "{\"Data\":\"json\"}"
+            Log log = new Log(data);
 
             boolean run = true;
             while (run) {
                 System.out.println("\nPress 1 to signIn\nPress 2 to signUp\nPress 0 to Close");
                 int choice = Integer.parseInt(reader.readLine());
-                Log log = new Log();
-                Log.data = data;
 
                 switch (choice) {
                     case 1:

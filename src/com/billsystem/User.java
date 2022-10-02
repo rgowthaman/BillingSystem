@@ -5,7 +5,6 @@ abstract public class User {
     private final String password;
     private final String role;
     private final String name;
-    private Data data;
 
     public User(int id, String password, String role, String name) {
         this.id = id;
@@ -38,13 +37,7 @@ abstract public class User {
         return this.role;
     }
 
-    public Data getStorage() {
-        return this.data;
-    }
-
-    public void setStorage(Data data) {
-        this.data = data;
-    }
+    abstract void setStorage(Data data);
 
     /**
      * To encrypt password
@@ -52,7 +45,7 @@ abstract public class User {
      * @param password
      * @return encrypted password
      */
-    public String encrypt(String password) {
+    public static String encrypt(String password) {
         StringBuilder encrypted_pass = new StringBuilder();
         for (int i = 0; i < password.length(); i++) {
             char c = password.charAt(i);

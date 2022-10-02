@@ -10,11 +10,20 @@ import java.util.List;
 import java.util.Map.Entry;
 
 public class Customer extends User {
-    Data data;
+    private Data data;
     private BufferedReader reader;
 
     public Customer(int id, String name, String password, String role) {
+        this(id, name, password, role, null);
+    }
+
+    public Customer(int id, String name, String password, String role, Data data) {
         super(id, password, role, name);
+        this.data = data;
+    }
+
+    public void setStorage(Data data) {
+        this.data = data;
     }
 
     /**
@@ -23,7 +32,6 @@ public class Customer extends User {
     @Override
     public void start() {
         try {
-            this.data = this.getStorage();
             reader = new BufferedReader(new InputStreamReader(System.in));
             boolean value = true;
             System.out.println(Constants.GREET + ", " + this.getName() + "-" + this.getId() + "\n");

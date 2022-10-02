@@ -8,10 +8,19 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 public class Admin extends User {
-    static Data data;
+    private Data data;
 
     public Admin(int id, String name, String password, String role) {
+        this(id, name, password, role, null);
+    }
+
+    public Admin(int id, String name, String password, String role, Data data) {
         super(id, password, role, name);
+        this.data = data;
+    }
+
+    public void setStorage(Data data) {
+        this.data = data;
     }
 
     /**
@@ -20,7 +29,6 @@ public class Admin extends User {
     @Override
     public void start() {
         try {
-            Admin.data = this.getStorage();
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             boolean value = true;
             System.out.println(Constants.GREET + " " + Constants.ADMIN_ROLE + "-" + this.getId());
@@ -144,7 +152,7 @@ public class Admin extends User {
      */
     private void addAdmin(String userName, String password) {
         int userId = Integer.parseInt(Constants.GENERATE_ADMIN_ID);
-        data.store_user(new Admin(userId, userName, password, Constants.ADMIN_ROLE));
+        data.store_user(new Admin(userId, userName, password, Constants.ADMIN_ROLE, data));
         System.out.println("Admin added.");
     }
 
